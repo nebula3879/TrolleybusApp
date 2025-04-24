@@ -1,0 +1,23 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="TrolleybusApp.App"
+             xmlns:local="using:TrolleybusApp"
+             xmlns:converters="using:TrolleybusApp.Converters">
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+  
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+        <Application.Resources>
+        <converters:BoolToStatusConverter x:Key="BoolToStatusConverter"/>
+        <converters:BoolToPolesConverter x:Key="BoolToPolesConverter"/>
+        <converters:BoolToStatusColorConverter x:Key="BoolToStatusColorConverter"/>
+        <converters:BoolToPolesColorConverter x:Key="BoolToPolesColorConverter"/>
+        <converters:StatusToTextConverter x:Key="StatusToTextConverter"/>
+        <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+    </Application.Resources>
+</Application>

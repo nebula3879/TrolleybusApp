@@ -1,0 +1,9 @@
+global using TrolleybusApp.Models;
+global using System;
+global using System.Collections.ObjectModel;
+global using System.Threading.Tasks;
+global using System.ComponentModel;
+global using System.Threading;
+global using Avalonia.Threading;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input; 

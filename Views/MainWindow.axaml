@@ -1,0 +1,82 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TrolleybusApp.ViewModels"
+        xmlns:models="using:TrolleybusApp.Models"
+        x:Class="TrolleybusApp.Views.MainWindow"
+        Title="Симулятор троллейбуса"
+        Width="900" Height="700"
+        Background="Black">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,*,*">
+        <TextBlock Grid.Row="0" Text="Симулятор троллейбуса" FontSize="24" FontWeight="Bold" Margin="10" HorizontalAlignment="Center" Foreground="Red" />
+        
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,*" Margin="10">
+            <TextBlock Grid.Row="0" Text="Список троллейбусов:" FontSize="16" FontWeight="Bold" Margin="0,0,0,5" Foreground="Red" />
+            
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10" Spacing="10">
+                <Button Content="Добавить троллейбус" Command="{Binding AddTrolleybusWithDriverCommand}" 
+                        Background="#808080" Foreground="Black" Padding="10,5" />
+            </StackPanel>
+            
+            <Border Grid.Row="2" BorderBrush="Red" BorderThickness="1" CornerRadius="5" Background="Black" 
+                    Margin="0,0,0,10">
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding Trolleybuses}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Red" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5" 
+                                        Background="Black" Width="250" Height="180">
+                                    <Grid RowDefinitions="Auto,*,Auto">
+                                        <TextBlock Grid.Row="0" Text="{Binding Id, StringFormat='Троллейбус №{0}'}" 
+                                                   FontWeight="Bold" FontSize="14" Foreground="White" 
+                                                   HorizontalAlignment="Center" Margin="0,0,0,5" />
+                                        <StackPanel Grid.Row="1" Spacing="5">
+                                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                                <TextBlock Text="Состояние: " Foreground="White" Width="80" />
+                                                <TextBlock Text="{Binding Status, Converter={StaticResource StatusToTextConverter}}" 
+                                                           Foreground="{Binding Status, Converter={StaticResource StatusToColorConverter}}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Водитель: " Foreground="White" Width="80" />
+                                                <TextBlock Text="{Binding CurrentDriver.Name}" Foreground="White" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <Button Grid.Row="2" Content="Удалить" 
+                                                Command="{Binding $parent[Window].DataContext.RemoveTrolleybusCommand}" 
+                                                CommandParameter="{Binding}"
+                                                HorizontalAlignment="Center" Margin="0,10,0,0"
+                                                Background="#FF9999" Foreground="Black" Padding="10,5" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+        
+        <Grid Grid.Row="2" RowDefinitions="Auto,*" Margin="10">
+            <TextBlock Grid.Row="0" Text="Журнал событий:" FontSize="16" FontWeight="Bold" Margin="0,0,0,5" Foreground="Red" />
+            <Border Grid.Row="1" BorderBrush="Red" BorderThickness="1" CornerRadius="5" Background="Black">
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding EventLog.Entries}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="5,2" Foreground="#808080" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
